@@ -114,112 +114,84 @@ The traffic plot conveys that many indicator values underwent rapid change in th
 
 \newgeometry{top=0.75in, left=0.75in, right=0.75in, bottom=0.75in}
 
-```{r tbl3, include = FALSE}
-# Placeholder for your actual table data
-# Replace this with your own data.frame or tibble
-my_table_data <- data.frame(
-  Indicator = c(
-    "Mean winter (Feb-Mar) bottom temperature",
-    "Shelf water volume",
-    "Commercial Landings (MT)",
-    "Recreational Landings (MT)",
-    "Another Indicator",
-    "Yet Another Indicator"
-  ),
-  `2023 Value` = c(8.5, 1200, 500, 300, 10, 25),
-  `2024 Value` = c(7.9, 1150, 520, 280, 12, 28),
-  `Time Series` = c(
-    "placeholder_temp.png",
-    "placeholder_volume.png",
-    "placeholder_comm.png",
-    "placeholder_rec.png",
-    "placeholder_indicator_a.png",
-    "placeholder_indicator_b.png"
-  ),
-  stringsAsFactors = FALSE
-)
+```{r, sum_table, echo = FALSE, message = FALSE, warning = FALSE}
+library(dplyr)
+library(gt)
+library(stringr)
 
-# Function to embed images in a flextable column
-# This function assumes images are in params$img_dir
-# You'll need to create placeholder image files (e.g., png) in your 'images' folder
-# for each of these. They can be empty or simple rectangles for now.
-embed_image_in_cell <- function(value, image_dir) {
-  if (value %in% c("placeholder_temp.png", "placeholder_volume.png",
-                   "placeholder_comm.png", "placeholder_rec.png",
-                   "placeholder_indicator_a.png", "placeholder_indicator_b.png")) {
-    img_path <- file.path(image_dir, value)
-    if (file.exists(img_path)) {
-      flextable::as_image(src = img_path, width = 1, height = 0.5) # Adjust width/height as needed
-    } else {
-      flextable::as_paragraph("Image Missing!") # Placeholder if image file not found
-    }
-  } else {
-    flextable::as_paragraph(value) # If it's not an image filename, just print the text
-  }
-}
+sum_table <- readRDS(here::here("docs/indicator_summary_table.rds"))
 
-tbl <- flextable(my_table_data)
+sum_table <- sum_table %>% 
+  filter(`Trend symbol` != "●")
 
-# Set column widths using params$widths, or adjust manually
-tbl <- flextable::width(tbl, j = 1, width = params$widths[1])
-tbl <- flextable::width(tbl, j = 2, width = params$widths[2])
-tbl <- flextable::width(tbl, j = 3, width = params$widths[3]) # This might be the `Time Series` column, adjust if needed
-tbl <- flextable::width(tbl, j = 4, width = params$widths[4]) # This might be `Time Series` image column
+gt_table <- sum_table %>%
+  mutate(
+    Indicator = str_wrap(Indicator, width = 35)  # Adjust to get desired line length
+  ) %>%
+  gt() %>%
+  tab_row_group(
+    label = "Recent trend below average",
+    rows = `Trend symbol` == "-"
+  ) %>%
+  tab_row_group(
+    label = "Recent trend above average",
+    rows = `Trend symbol` == "+"
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) %>%
+  cols_label(
+    Indicator = "Indicator"  
+  ) %>%
+  tab_style(
+    style = cell_borders(
+      sides = "right",
+      color = "light gray",
+      weight = px(2)
+    ),
+    locations = cells_body(
+      columns = c(Indicator)
+    )
+  ) %>%
+  cols_width(
+  Indicator ~ px(180),         # Column 1 — wide for wrapped text
+  Units ~ px(160),     # Column 2
+  `Extent/sub-indicator` ~ px(100),           # Column 3
+  `Trend symbol` ~ px(40),       # Column 4
+  `Slope symbol` ~ px(40),       # Column 5
+  Mean ~ px(40),           # Column 6
+  SD ~ px(40),             # Column 7
+  `Min year` ~ px(40),           # Column 6
+  `Max year` ~ px(40)             # Column 7
+) %>%
+  cols_align(
+    align = "left",
+    columns = everything()
+  ) %>%
+  tab_options(
+    row_group.background.color = "lightgrey",
+    table.font.names = "Times New Roman",
+    table.font.size = 10,
+    table.width = pct(100)
+  )
 
-# Set header labels
-tbl <- flextable::set_header_labels(tbl, `Time Series` = "Time Series*")
-
-# Apply font
-tbl <- flextable::font(tbl, fontname = "Times New Roman", part = "body")
-tbl <- flextable::font(tbl, fontname = "Times New Roman", part = "header")
-
-# Add superscripts for specific rows/columns
-# Note: These are hardcoded for row indices 1 and 2 based on your original example.
-# You'll need to adjust these if your "Indicator" values change positions.
-tbl <- flextable::compose(tbl,
-                          part = "body",
-                          i = 1,
-                          j = "Indicator", # Target the "Indicator" column
-                          value = flextable::as_paragraph("Mean winter (Feb-Mar) bottom temperature (\u00B0C)"))
-tbl <- flextable::compose(tbl,
-                          part = "body",
-                          i = 2,
-                          j = "Indicator", # Target the "Indicator" column
-                          value = flextable::as_paragraph("Shelf water volume (km",
-                                                          flextable::as_sup("3"),
-                                                          ")"))
-
-# Embed images in the "Time Series" column
-# This uses lapply to apply the embed_image_in_cell function to each cell
-#tbl <- flextable::compose(tbl, j = "Time.Series", value = lapply(my_table_data$Time.Series, function(x) embed_image_in_cell(x, params$img_dir)))
-
-
-# You might need to adjust row heights if your images are tall
-# tbl <- flextable::height_all(tbl, height = 2, part = "body", unit = "in")
+gt_table
 ```
 
-```{r}
-#| echo: false
-tbl
-```
 
 \vspace{-0.4cm}
-\footnotesize \* The y-axis units are included in the "Indicator" column of the table. In all figures, the dashed line represents the time series mean, and the solid green lines indicate ± 1 standard deviation. Commercial data were derived from the commercial dealer database hosted at the Greater Atlantic Regional Office. All dollar values have been adjusted to 2024 real dollars using the [Gross Domestic Implicit Price Deflator](https://fred.stlouisfed.org/series/GDPDEF). The code used to create this report can be viewed online: [github.com/NEFSC/READ-EDAB-bsbESP](github.com/NEFSC/READ-EDAB/bsbESP) \newline
+\footnotesize \* The table above shows details for indicators with recent trends (last 5 years of available data) either above or below the average of the time series. For each indicator, the units and extent or sub-indicator name are presented, as well as a symbol for whether the recent trend is above or below average (+ or -) and a symbol for whether the slope of a linear model fit to the last 5 years of data is increasing, decreasing, or stable compared to the long-term slope. The mean of the time series, standard deviation, minimum year and maximum year are also presented. Indicators were excluded if there was no data available after 2020. The code used to create this report can be viewed online: [github.com/NEFSC/READ-EDAB-bsbESP](github.com/NEFSC/READ-EDAB/bsbESP) \newline
 
 \centering\normalsize
 
-We welcome your observations! Please contact [northeast.ecosystem.highlights@noaa.gov](northeast.ecosystem.highlights@noaa.gov) with any on-the-water insights or changes observed in the black sea bass fishery and [nefsc.esp.leads@noaa.gov](nefsc.esp.leads@noaa.gov) with questions or comments on the information presented in this report.
+We welcome your observations! Please contact [mandy.karnauskas@noaa.gov](mandy.karnauskas@noaa.gov) or [carissa.gervasi@noaa.gov](carissa.gervasi@noaa.gov) with questions or comments on the information presented in this report.
 
-\newpage
-\newgeometry{top=1in, left=1in, right=1in, bottom=1in}
-
-\AddToShipoutPictureBG*{%
-  \AtPageLowerLeft{%
-    \includegraphics[width=\paperwidth,height=\paperheight]{bg_pg2.jpg}%
-  }%
-}
 
 # References
+\begingroup
+\footnotesize
 ::: {#refs}
 :::
+\endgroup
 
