@@ -4,7 +4,7 @@ format:
   pdf:
     margin-left: "0.5in"
     margin-right: "0.5in"
-    margin-top: "0.5in"
+    margin-top: "0.2in"
     margin-bottom: "0.5in"
     fontsize: "10pt"
     linestretch: 1
@@ -42,9 +42,9 @@ library(ggplot2)
 
 This is a short-form update to the full 2025 U.S. Caribbean Ecosystem Status Report (ESR) [@tabandera_black_2024] highlighting the recent status of environmental, ecological, and socioeconomic factors. Indicators were compiled into two categories: tracking performance toward fishery management objectives and risks to meeting fishery management objectives.
 
-\vspace{-0.25cm}
+\vspace{0.2cm}
 
-::: {layout="[ [0.4, 0.025, 0.575], [1], [0.575, 0.025, 0.4]] "}
+::: {layout="[ [0.4, 0.025, 0.575], [1], [0.3, 0.025, 0.675]] "}
 
 :::: {}
 ![](`r params$img1`)
@@ -74,25 +74,34 @@ This is a short-form update to the full 2025 U.S. Caribbean Ecosystem Status Rep
 -   Other insights?
 ::::
 
-:::
-
+:::: {}
 \vspace{0.5cm}
 \section{Integrated Ecosystem Perspectives}
-\vspace{0.05cm}
+\vspace{-0.25cm}
+::::
+
+:::: {}
+\raggedright
 
 \subsection{Analysis}
 Multivariate methods (principal components analysis and traffic light plot; see details in full report) were used to synthesize the information contained in the full suite of indicators.
+\vspace{0.1cm}
 
 \subsection{Interpretation}
 The traffic plot conveys that many indicator values underwent rapid change in the period 2017-2021, and the PCA biplots confirm these patterns as there are larger two-dimensional shifts between these years. These shifts are most likely driven by several major stressor events in this time period, including the major hurricanes Maria and Irma (2017) and the COVID pandemic (2020-2021). Together, the multivariate analyses suggest that these events have had some destabilizing impacts on the U.S. Caribbean fishery ecosystem.
 
-```{r}
-#| layout-ncol: 2
-#| echo: false
+::::
 
-knitr::include_graphics(params$img2)
-knitr::include_graphics(params$img3)
-```
+:::: {}
+\hfill
+::::
+
+:::: {}
+![](`r params$img2`) 
+::::
+
+:::
+
 
 \newpage
 
