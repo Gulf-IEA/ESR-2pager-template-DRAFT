@@ -1,6 +1,6 @@
 ---
-title: "Black Sea Bass (\\protect\\textit{Centropristis striata}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile"
-format: 
+title: "U.S. Caribbean \\linebreak Snapshot Ecosystem Status Report"
+format:
   pdf:
     margin-left: "0.5in"
     margin-right: "0.5in"
@@ -9,17 +9,15 @@ format:
     fontsize: "10pt"
     linestretch: 1
     indent: true
-    include-in-header: tex_template.tex    
+    include-in-header: tex_template.tex
     keep-tex: true
     papersize: letter
 params:
-  widths: !expr c(0.9, 0.75, 2, 3)
-  img1: !expr here::here("images/edab-habitat-blseabass-composite-nefsc.png")
-  img2: !expr here::here("images/new_condition.png")
-  img3: !expr here::here("images/risk_plot.png")
-  tbl_file: !expr here::here("docs/bsb_indicator_table.xlsx")
+  widths: !expr c(0.9, 0.75, 2, 3) 
+  img1: !expr here::here("images/process_flow_chart.png")
+  img2: !expr here::here("images/traffic.png")
+  img3: !expr here::here("images/pcas.png")
   img_dir: !expr here::here("images")
-  terminal_year: 2024
 latex_engine: xelatex
 bibliography: bsb_references.bib
 nocite: |
@@ -28,25 +26,21 @@ csl: cambridge-university-press-numeric.csl
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
-devtools::load_all(here::here("../READ-EDAB-NEesp2"))
-# here::i_am("inst/esp_template/06_docs/report card pg 1.qmd")
+library(here) 
+library(flextable) 
+library(ggplot2) 
 ```
 
-<!-- \backgroundsetup{ -->
-<!--   scale=1, -->
-<!--   angle=0, -->
-<!--   opacity=0, -->
-<!--   contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg1.jpg}} -->
-<!--  } -->
-<!-- \BgThispage -->
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{bg_pg1.jpg}%
+  }%
+}
 
 \vspace{-2.5cm}
-\section{Spring 2025}
+\section{2025}
 
-This is a short-form update to the full Ecosystem and Socioeconomic Profile [@tabandera_black_2024] highlighting the recent status of environmental, ecological, and socioeconomic factors. Black sea bass is an important Mid-Atlantic stock with high commercial value and recreational engagement. Overfishing is not occurring and the stock is not overfished. Winter bottom temperature is used in the stock assessment model as a factor that influences recruitment  to incorporate the observed link between cold temperature and smaller year classes [@nefsc_report_2023].
+This is a short-form update to the full 2025 U.S. Caribbean Ecosystem Status Report (ESR) [@tabandera_black_2024] highlighting the recent status of environmental, ecological, and socioeconomic factors. Indicators were compiled into two categories: tracking performance toward fishery management objectives and risks to meeting fishery management objectives.
 
 \vspace{-0.25cm}
 
@@ -54,7 +48,6 @@ This is a short-form update to the full Ecosystem and Socioeconomic Profile [@ta
 
 :::: {}
 ![](`r params$img1`)
-\footnotesize\raggedright Figure source: [https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/fisheries-habitat-northeast-us-shelf-ecosystem](https://www.fisheries.noaa.gov/new-england-mid-atlantic/ecosystems/fisheries-habitat-northeast-us-shelf-ecosystem)
 \normalsize
 ::::
 
@@ -63,151 +56,141 @@ This is a short-form update to the full Ecosystem and Socioeconomic Profile [@ta
 ::::
 
 :::: {}
-\section{2024 in Review}
+\section{Overview of recent trends}
 \vspace{-0.25cm}
 
-\subsection{Fishing Community Observations}
+\subsection{Performace indicators}
 
--   Steady or increasing availability 
--   Concerns about high discards
--   Restrictive and complex regulations limit fishing opportunities
--   For additional information, see @mafmc_black_2024, @mafmc_summer_2024, and @mafmc_summer_2024b
-
-\vspace{-0.25cm}
-\subsection{Commercial Fishery}
-
--   Number of active vessels declined in 2024, but total landed pounds increased from 2023 
--   Total revenue decreased slightly along with average prices (\$/lb)
--   Average revenue per vessel increased
+-   17 indicators were compiled to track perfomance towards management objectives.
+-   Indicators were categorized as relating to food production, socioeconomic health, equality, engagement and participation, bycatch reduction, governance, and protection of ecosystems.
+-   add some text about indicators
 
 \vspace{-0.25cm}
-\subsection{Recreational Fishery}
+\subsection{Risk indicators}
 
--   Targeted trips, catch, and landings all down from 2023 [@mafmc_black_2024]
--   However, number of trips is still above the historic average
--   Recreational catch-per-angler index not yet updated for 2024
-
-\vspace{-0.25cm}
-\subsection{Ecosystem}
-
--   The stock assessment models the stock as two subunits, divided at the Hudson Canyon
--   Cold winter in the north but near average in the south
--   Poor or below average fish condition (i.e., weight at a given length; see below)
-::::
-
-:::: {}
-\vspace{0.25cm}
-\section{Key Points from the Mid-Atlantic Risk Assessment}
-\vspace{0.05cm}
-<!-- \vspace{0.15cm} -->
-::::
-
-:::: {}
-\raggedright
-
-<!-- maybe this is being centered because it's the only section without a header? -->
-\subsection{Moderate-high to high risk of the stock not achieving optimal biomass due to:}
-
--   Very high exposure to changes in climate
--   Observed and potential changes in distribution; northward shift into the Gulf of Maine
--   Dependence on threatened estuarine habitat
--   Decline in the biomass of benthic invertebrate prey
--   Decline in black sea bass body condition (see right)
-
-\vspace{-0.25cm}
-\subsection{High risk of the recreational fishery not achieving optimal yield due to:}
-
--   Catch exceeding harvest limits in several years
--   High regulatory complexity; frequent changes and varying interstate regulations; regulatory changes in allocations
-
-\vspace{-0.25cm}
-\subsection{Moderate-high risk of the commercial fishery not achieving optimal yield due to:}
-
--   Commercial revenue in wind development areas
--   High discards & discard mortality
-
-\vspace{-0.25cm}
-Please see the [Mid-Atlantic 2024 EAFM risk assessment update](https://static1.squarespace.com/static/511cdc7fe4b00307a2628ac6/t/6747560a3cf66936045e5547/1732728332670/05_EAFM+Risk+Assessment.pdf) for more details and explanation of the low and low-moderate risks to black sea bass and its associated fisheries.
-
-
-```{r, eval = FALSE}
-devtools::load_all("../READ-EDAB-NEesp2")
-risk_fig <- NEesp2::plot_risk(risk_elements = tibble::tibble(stock = c(4, 0, 2, 2),
-                                                              recreational = c(1, 1, 1, 3),
-                                                              commercial = c(1, 4, 2, 0)))
-ggplot2::ggsave(risk_fig, 
-                filename = here::here("images/risk_plot.png"),
-                width = 4,
-                height = 2.5,
-                dpi = 300)
-```
-::::
-
-:::: {}
-\hfill
-::::
-
-:::: {}
-![](`r params$img2`) 
-![](`r params$img3`)
+-   13 indicators were compiled to track risks to meeting management objectives.
+-   Indicators track changes in the physical environment and human activities.
+-   Major recent changes in the physical environment include increased sea surface temperature, coral bleaching stress, and ocean acidification. 
+-   Other insights?
 ::::
 
 :::
 
+\vspace{0.5cm}
+\section{Integrated Ecosystem Perspectives}
+\vspace{0.05cm}
+
+\subsection{Analysis}
+Multivariate methods (principal components analysis and traffic light plot; see details in full report) were used to synthesize the information contained in the full suite of indicators.
+
+\subsection{Interpretation}
+The traffic plot conveys that many indicator values underwent rapid change in the period 2017-2021, and the PCA biplots confirm these patterns as there are larger two-dimensional shifts between these years. These shifts are most likely driven by several major stressor events in this time period, including the major hurricanes Maria and Irma (2017) and the COVID pandemic (2020-2021). Together, the multivariate analyses suggest that these events have had some destabilizing impacts on the U.S. Caribbean fishery ecosystem.
+
+```{r}
+#| layout-ncol: 2
+#| echo: false
+
+knitr::include_graphics(params$img2)
+knitr::include_graphics(params$img3)
+```
+
 \newpage
 
-<!-- \backgroundsetup{ -->
-<!--   scale=1, -->
-<!--   angle=0, -->
-<!--   opacity=0, -->
-<!--   contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg2.jpg}} -->
-<!--  } -->
-<!-- \BgThispage -->
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{bg_pg2.jpg}%
+  }%
+}
 
-<!-- not sure why this background isn't working -->
 
 \newgeometry{top=0.75in, left=0.75in, right=0.75in, bottom=0.75in}
 
-```{r tbl1, include = FALSE}
-data <- NEesp2::format_tbl_data(file = params$tbl_file,
-                            term_year = params$terminal_year,
-                            dir = params$img_dir)
-```
+```{r tbl3, include = FALSE}
+# Placeholder for your actual table data
+# Replace this with your own data.frame or tibble
+my_table_data <- data.frame(
+  Indicator = c(
+    "Mean winter (Feb-Mar) bottom temperature",
+    "Shelf water volume",
+    "Commercial Landings (MT)",
+    "Recreational Landings (MT)",
+    "Another Indicator",
+    "Yet Another Indicator"
+  ),
+  `2023 Value` = c(8.5, 1200, 500, 300, 10, 25),
+  `2024 Value` = c(7.9, 1150, 520, 280, 12, 28),
+  `Time Series` = c(
+    "placeholder_temp.png",
+    "placeholder_volume.png",
+    "placeholder_comm.png",
+    "placeholder_rec.png",
+    "placeholder_indicator_a.png",
+    "placeholder_indicator_b.png"
+  ),
+  stringsAsFactors = FALSE
+)
 
-```{r tbl2, include = FALSE}
-tbl <- NEesp2::rpt_card_table(data,
-                       widths = params$widths)
+# Function to embed images in a flextable column
+# This function assumes images are in params$img_dir
+# You'll need to create placeholder image files (e.g., png) in your 'images' folder
+# for each of these. They can be empty or simple rectangles for now.
+embed_image_in_cell <- function(value, image_dir) {
+  if (value %in% c("placeholder_temp.png", "placeholder_volume.png",
+                   "placeholder_comm.png", "placeholder_rec.png",
+                   "placeholder_indicator_a.png", "placeholder_indicator_b.png")) {
+    img_path <- file.path(image_dir, value)
+    if (file.exists(img_path)) {
+      flextable::as_image(src = img_path, width = 1, height = 0.5) # Adjust width/height as needed
+    } else {
+      flextable::as_paragraph("Image Missing!") # Placeholder if image file not found
+    }
+  } else {
+    flextable::as_paragraph(value) # If it's not an image filename, just print the text
+  }
+}
+
+tbl <- flextable(my_table_data)
+
+# Set column widths using params$widths, or adjust manually
+tbl <- flextable::width(tbl, j = 1, width = params$widths[1])
+tbl <- flextable::width(tbl, j = 2, width = params$widths[2])
+tbl <- flextable::width(tbl, j = 3, width = params$widths[3]) # This might be the `Time Series` column, adjust if needed
+tbl <- flextable::width(tbl, j = 4, width = params$widths[4]) # This might be `Time Series` image column
+
+# Set header labels
 tbl <- flextable::set_header_labels(tbl, `Time Series` = "Time Series*")
 
+# Apply font
 tbl <- flextable::font(tbl, fontname = "Times New Roman", part = "body")
 tbl <- flextable::font(tbl, fontname = "Times New Roman", part = "header")
-```
 
-```{r tbl3, include = FALSE}
-# this doesn't seem to do anything
-# tbl <- flextable::height_all(tbl, height = 2, part = "body", unit = "in")
-# tbl <- flextable::hrule(tbl, rule = "atleast", part = "body")
-
-# add superscripts
-tbl <- flextable::compose(tbl, 
-                          part = "body", 
-                          i = 1, 
-                          j = 1, 
+# Add superscripts for specific rows/columns
+# Note: These are hardcoded for row indices 1 and 2 based on your original example.
+# You'll need to adjust these if your "Indicator" values change positions.
+tbl <- flextable::compose(tbl,
+                          part = "body",
+                          i = 1,
+                          j = "Indicator", # Target the "Indicator" column
                           value = flextable::as_paragraph("Mean winter (Feb-Mar) bottom temperature (\u00B0C)"))
-tbl <- flextable::compose(tbl, 
-                          part = "body", 
-                          i = 2, 
-                          j = 1, 
-                          value = flextable::as_paragraph("Shelf water volume (km", 
-                                                          flextable::as_sup("3"), 
+tbl <- flextable::compose(tbl,
+                          part = "body",
+                          i = 2,
+                          j = "Indicator", # Target the "Indicator" column
+                          value = flextable::as_paragraph("Shelf water volume (km",
+                                                          flextable::as_sup("3"),
                                                           ")"))
 
-# tbl <- ftExtra::colformat_md(tbl)
-tbl
-# flextable::save_as_image(tbl, here::here("images/indicator_table.png"))
+# Embed images in the "Time Series" column
+# This uses lapply to apply the embed_image_in_cell function to each cell
+#tbl <- flextable::compose(tbl, j = "Time.Series", value = lapply(my_table_data$Time.Series, function(x) embed_image_in_cell(x, params$img_dir)))
+
+
+# You might need to adjust row heights if your images are tall
+# tbl <- flextable::height_all(tbl, height = 2, part = "body", unit = "in")
 ```
 
 ```{r}
+#| echo: false
 tbl
 ```
 
@@ -220,6 +203,12 @@ We welcome your observations! Please contact [northeast.ecosystem.highlights@noa
 
 \newpage
 \newgeometry{top=1in, left=1in, right=1in, bottom=1in}
+
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{bg_pg2.jpg}%
+  }%
+}
 
 # References
 ::: {#refs}
